@@ -21,4 +21,14 @@ const goToApp = () => router.push('/todo')
   height: 100vh;
   font-family: Arial, sans-serif;
 }
+
+button {
+  padding: 15px 30px;
+  font-size: 16px;
+  background-color: #006ad4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 </style>
