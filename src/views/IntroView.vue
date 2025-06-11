@@ -10,7 +10,7 @@
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const goToApp = () => {
-  router.push('/todo')
+  router.push({ name: 'todo' })
 }
 </script>
 
