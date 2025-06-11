@@ -64,59 +64,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { useTodoStore } from '@/stores/todo.ts'
-
-const todoStore = useTodoStore()
-const newCategory = ref('')
-
-const addCategory = () => {
-  if (newCategory.value.trim()) {
-    todoStore.addCategory(newCategory.value)
-    newCategory.value = ''
-  }
-}
-
-// This will track the input text for each category’s todo field
-const todoInputs = reactive<Record<string, string>>({})
-// This adds a new todo to a category by its ID
-function addTodo(categoryId: string) {
-  const text = todoInputs[categoryId]?.trim()
-  if (text) {
-    todoStore.addTodoToCategory(categoryId, {
-      id: crypto.randomUUID(), // unique todo ID
-      text,
-    })
-    todoInputs[categoryId] = '' // clear the input after adding
-  }
-}
-const editingTodo = ref<{ categoryId: string; todoId: string } | null>(null)
-const editInputs = reactive<Record<string, string>>({})
-
-function startEditing(categoryId: string, todoId: string, currentText: string) {
-  editingTodo.value = { categoryId, todoId }
-  editInputs[todoId] = currentText
-}
-
-function cancelEdit() {
-  editingTodo.value = null
-}
-
-function saveEdit(categoryId: string, todoId: string) {
-  const category = todoStore.categories.find((c) => c.id === categoryId)
-  if (!category) return
-
-  const todo = category.todos.find((t) => t.id === todoId)
-  if (!todo) return
-
-  const newText = editInputs[todoId]?.trim()
-  if (newText && newText !== todo.text) {
-    todo.text = newText
-  }
-
-  editingTodo.value = null
-}
+import { useTodoLogic } from '@/composables/useTodoLogic'
+const {
+  newCategory,
+  todoInputs,
+  editInputs,
+  editingTodo,
+  addCategory,
+  addTodo,
+  startEditing,
+  cancelEdit,
+  saveEdit,
+  todoStore,
+} = useTodoLogic()
 </script>
+
 <style scoped>
 .todo-view {
   max-width: 600px;

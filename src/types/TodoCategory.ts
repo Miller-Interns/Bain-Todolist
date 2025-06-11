@@ -1,6 +1,6 @@
 import type { TodoItem } from './TodoItem'
 
-export interface TodoCategory {
+export type TodoCategory = {
   id: string
   name: string
   todos: TodoItem[]
